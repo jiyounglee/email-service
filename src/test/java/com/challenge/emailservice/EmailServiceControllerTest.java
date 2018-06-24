@@ -1,5 +1,6 @@
 package com.challenge.emailservice;
 
+import com.challenge.emailservice.service.EmailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class EmailServiceControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private EmailService service;
 
     @Test
     public void shouldReturnErrorWhenRequestedWithInvalidEmailPayload() throws Exception {

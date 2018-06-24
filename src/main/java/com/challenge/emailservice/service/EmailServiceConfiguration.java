@@ -14,25 +14,19 @@ public class EmailServiceConfiguration {
     @Autowired
     Environment env;
 
-//    @Bean
-//    public EmailService emailService() {
-//        SendGridEmailSender sendGridEmailSender = new SendGridEmailSender(
-//                env.getProperty("email.sender.sendgrid.url"),
-//                env.getProperty("email.sender.sendgrid.api.key"));
-//
-//        List<EmailSender> emailSenders = new ArrayList<>();
-//        emailSenders.add(sendGridEmailSender);
-//
-//        return new EmailService(emailSenders);
-//    }
-
     @Bean
     public List<EmailSender> emailSenders() {
+        
+        MailGunEmailSender mailGunEmailSender = new MailGunEmailSender(
+                env.getProperty("email.sender.mailgun.url"),
+                env.getProperty("email.sender.mailgun.api.key"));
+
         SendGridEmailSender sendGridEmailSender = new SendGridEmailSender(
                 env.getProperty("email.sender.sendgrid.url"),
                 env.getProperty("email.sender.sendgrid.api.key"));
 
         List<EmailSender> emailSenders = new ArrayList<>();
+        emailSenders.add(mailGunEmailSender);
         emailSenders.add(sendGridEmailSender);
 
         return emailSenders;

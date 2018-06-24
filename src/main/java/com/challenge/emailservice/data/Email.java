@@ -1,14 +1,22 @@
 package com.challenge.emailservice.data;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class Email {
-
+    
     private List<EmailAddress> tos;
     private List<EmailAddress> froms;
     private List<EmailAddress> ccs;
     private List<EmailAddress> bccs;
+
+    @NotNull(message = "Subject is required")
+    @Size(min = 1)
     private String subject;
+
+    @NotNull(message = "Content is required")
+    @Size(min = 1)
     private String content;
 
     public List<EmailAddress> getTos() {

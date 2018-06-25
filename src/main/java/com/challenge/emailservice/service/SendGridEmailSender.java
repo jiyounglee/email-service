@@ -35,6 +35,7 @@ public class SendGridEmailSender implements EmailSender {
     }
 
     private String createPayload(Email email) {
+        
         return "{\"personalizations\":[{\"to\":[{\"email\":\"jylee1103@gmail.com\"}]}],\"from\":{\"email\":\"jylee1103@gmail.com\"},\"subject\":\"Sending with SendGrid is Fun\",\"content\":[{\"type\":\"text/plain\",\"value\":\"and easy to do anywhere, even with cURL\"}]}";
     }
 }

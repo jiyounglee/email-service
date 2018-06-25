@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Optional;
 
 public class Email {
 
@@ -14,10 +15,10 @@ public class Email {
     private List<@Valid EmailAddress> to;
 
     @Valid
-    private List<@Valid EmailAddress> cc;
+    private Optional<List<@Valid EmailAddress>> cc;
 
     @Valid
-    private List<@Valid EmailAddress> bcc;
+    private Optional<List<@Valid EmailAddress>> bcc;
 
     @NotNull(message = "Subject is required")
     @Size(min = 1)
@@ -26,6 +27,11 @@ public class Email {
     @NotNull(message = "Content is required")
     @Size(min = 1)
     private String content;
+
+    public Email() {
+        cc = Optional.empty();
+        bcc = Optional.empty();
+    }
 
     public List<EmailAddress> getFrom() {
         return from;
@@ -43,19 +49,19 @@ public class Email {
         this.to = to;
     }
 
-    public List<EmailAddress> getCc() {
+    public Optional<List<EmailAddress>> getCc() {
         return cc;
     }
 
-    public void setCc(List<EmailAddress> cc) {
+    public void setCc(Optional<List<EmailAddress>> cc) {
         this.cc = cc;
     }
 
-    public List<EmailAddress> getBcc() {
+    public Optional<List<EmailAddress>> getBcc() {
         return bcc;
     }
 
-    public void setBcc(List<EmailAddress> bcc) {
+    public void setBcc(Optional<List<EmailAddress>> bcc) {
         this.bcc = bcc;
     }
 

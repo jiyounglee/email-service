@@ -1,5 +1,7 @@
 package com.challenge.emailservice.service;
 
+import com.challenge.emailservice.service.mailgun.MailGunEmailSender;
+import com.challenge.emailservice.service.sendgrid.SendGridEmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

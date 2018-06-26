@@ -1,7 +1,8 @@
 package com.challenge.emailservice.service;
 
-import com.challenge.emailservice.service.mailgun.MailGunEmailSender;
-import com.challenge.emailservice.service.sendgrid.SendGridEmailSender;
+import com.challenge.emailservice.service.sender.EmailSender;
+import com.challenge.emailservice.service.sender.mailgun.MailGunEmailSender;
+import com.challenge.emailservice.service.sender.sendgrid.SendGridEmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,8 +29,8 @@ public class EmailServiceConfiguration {
                 env.getProperty("email.sender.sendgrid.api.key"));
 
         List<EmailSender> emailSenders = new ArrayList<>();
-        emailSenders.add(sendGridEmailSender);
         emailSenders.add(mailGunEmailSender);
+        emailSenders.add(sendGridEmailSender);
 
         return emailSenders;
     }

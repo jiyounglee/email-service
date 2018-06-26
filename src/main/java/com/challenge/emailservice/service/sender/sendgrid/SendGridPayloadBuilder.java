@@ -1,4 +1,4 @@
-package com.challenge.emailservice.service.sendgrid;
+package com.challenge.emailservice.service.sender.sendgrid;
 
 import com.challenge.emailservice.data.Email;
 import com.challenge.emailservice.data.EmailAddress;

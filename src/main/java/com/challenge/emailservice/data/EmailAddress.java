@@ -31,4 +31,12 @@ public class EmailAddress {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "EmailAddress{" +
+                "name=" + name +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

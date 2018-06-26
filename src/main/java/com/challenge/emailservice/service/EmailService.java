@@ -1,6 +1,8 @@
 package com.challenge.emailservice.service;
 
 import com.challenge.emailservice.data.Email;
+import com.challenge.emailservice.service.sender.EmailSender;
+import com.challenge.emailservice.service.sender.EmailSenderStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,16 @@ public class EmailService {
 
     public void sendEmail(final Email email) {
 
+        logger.info("Sending Email");
+
         for (EmailSender emailSender : emailSenders) {
-            try {
-                emailSender.send(email);
+
+            EmailSenderStatus status = emailSender.send(email);
+            if (status == EmailSenderStatus.SUCCEEDED) {
+
+                logger.info("Sent Email with sender {}", emailSender.getClass().getSimpleName());
                 return;
-            } catch (Exception e) {
-                logger.error("failed to send", e);
             }
         }
-        throw new RuntimeException();
     }
 }

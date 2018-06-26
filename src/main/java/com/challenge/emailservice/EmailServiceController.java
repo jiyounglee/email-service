@@ -19,12 +19,12 @@ public class EmailServiceController {
     private static final Logger logger = LoggerFactory.getLogger(EmailServiceController.class);
 
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @PostMapping("/email")
     public @ResponseBody
     Response sendEmail(@Valid @RequestBody final Email email) {
-        logger.debug("Received request to send email");
+        logger.debug("Received request to send email {}", email.toString());
         emailService.sendEmail(email);
         return new Response("succeeded", "sent email");
     }

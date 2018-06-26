@@ -66,7 +66,7 @@ public class MailGunEmailSender implements EmailSender {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
         builder.queryParams(payloadBuilder.build(email));
 
-        return builder.toUriString();
+        return builder.build(false).toUriString();
     }
 
 

@@ -28,8 +28,8 @@ public class EmailServiceConfiguration {
                 env.getProperty("email.sender.sendgrid.api.key"));
 
         List<EmailSender> emailSenders = new ArrayList<>();
-        emailSenders.add(mailGunEmailSender);
         emailSenders.add(sendGridEmailSender);
+        emailSenders.add(mailGunEmailSender);
 
         return emailSenders;
     }

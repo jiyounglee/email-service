@@ -9,7 +9,7 @@ import java.util.Optional;
 public class Email {
 
     @Valid
-    private List<@Valid EmailAddress> from;
+    private EmailAddress from;
 
     @Valid
     private List<@Valid EmailAddress> to;
@@ -33,11 +33,11 @@ public class Email {
         bcc = Optional.empty();
     }
 
-    public List<EmailAddress> getFrom() {
+    public EmailAddress getFrom() {
         return from;
     }
 
-    public void setFrom(List<EmailAddress> from) {
+    public void setFrom(EmailAddress from) {
         this.from = from;
     }
 

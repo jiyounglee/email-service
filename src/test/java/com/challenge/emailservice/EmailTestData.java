@@ -19,7 +19,7 @@ public class EmailTestData {
         to.setAddress("to@email.com");
 
         Email email = new Email();
-        email.setFrom(Lists.newArrayList(from));
+        email.setFrom(from);
         email.setTo(Lists.newArrayList(to));
         email.setCc(Optional.empty());
         email.setBcc(Optional.empty());

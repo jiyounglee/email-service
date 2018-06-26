@@ -7,6 +7,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,6 @@ public class MailGunPayloadBuilder {
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 
-        buildEmailAddresses(map, "from", email.getFrom());
         buildEmailAddresses(map, "to", email.getTo());
 
         if (email.getCc().isPresent()) {
@@ -27,6 +27,7 @@ public class MailGunPayloadBuilder {
         }
 
         try {
+            map.add("from", buildEmailAddress(email.getFrom()));
             map.add("subject", URLEncoder.encode(email.getSubject(), "UTF-8"));
             map.add("text", URLEncoder.encode(email.getContent(), "UTF-8"));
         } catch (UnsupportedEncodingException e) {

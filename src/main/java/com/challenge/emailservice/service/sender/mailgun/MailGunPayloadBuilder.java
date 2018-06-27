@@ -2,12 +2,13 @@ package com.challenge.emailservice.service.sender.mailgun;
 
 import com.challenge.emailservice.data.Email;
 import com.challenge.emailservice.data.EmailAddress;
-import com.sun.deploy.net.URLEncoder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
+
 
 public class MailGunPayloadBuilder {
 
@@ -35,15 +36,12 @@ public class MailGunPayloadBuilder {
                                      final List<EmailAddress> emailAddresses) {
 
         for (EmailAddress emailAddress : emailAddresses) {
-            try {
-                map.add(type, buildEmailAddress(emailAddress));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            map.add(type, buildEmailAddress(emailAddress));
+
         }
     }
 
-    private String buildEmailAddress(final EmailAddress emailAddress) throws UnsupportedEncodingException {
+    private String buildEmailAddress(final EmailAddress emailAddress) {
 
         if (emailAddress.getName().isPresent()) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -53,7 +51,6 @@ public class MailGunPayloadBuilder {
             stringBuilder.append(emailAddress.getAddress());
             stringBuilder.append(">");
             return stringBuilder.toString();
-//            return URLEncoder.encode(stringBuilder.toString(), "UTF-8");
         } else {
             return emailAddress.getAddress();
         }

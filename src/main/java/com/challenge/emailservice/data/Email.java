@@ -1,6 +1,7 @@
 package com.challenge.emailservice.data;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -8,10 +9,12 @@ import java.util.Optional;
 
 public class Email {
 
+    @NotNull
     @Valid
     private EmailAddress from;
 
     @Valid
+    @NotEmpty
     private List<@Valid EmailAddress> to;
 
     @Valid
@@ -21,11 +24,12 @@ public class Email {
     private Optional<List<@Valid EmailAddress>> bcc;
 
     @NotNull(message = "Subject is required")
-    @Size(min = 1)
+    @NotEmpty
+    @Size(max = 62)
     private String subject;
 
     @NotNull(message = "Content is required")
-    @Size(min = 1)
+    @NotEmpty
     private String content;
 
     public Email() {

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,7 +38,6 @@ public class MailGunEmailSender implements EmailSender {
 
         headers = new HttpHeaders();
         headers.add(AUTHORIZATION, "Basic " + new String(encodeBase64(("api:" + apiKey).getBytes())));
-//        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         payloadBuilder = new MailGunPayloadBuilder();
     }
@@ -57,6 +58,11 @@ public class MailGunEmailSender implements EmailSender {
             }
         } catch (Throwable throwable) {
             logger.error("Failed to Send email", throwable);
+            if (throwable instanceof HttpClientErrorException) {
+                String error = ((HttpClientErrorException) throwable).getResponseBodyAsString();
+                logger.error(error);
+            }
+
             return EmailSenderStatus.FAILED;
 
         }

@@ -35,5 +35,6 @@ public class EmailService {
                 return;
             }
         }
+        throw new RuntimeException("Failed request email to be sent");
     }
 }

@@ -6,7 +6,11 @@ import com.challenge.emailservice.service.sender.EmailSenderStatus;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -51,6 +55,11 @@ public class SendGridEmailSender implements EmailSender {
             }
         } catch (Throwable throwable) {
             logger.error("Failed to Send email", throwable);
+            if (throwable instanceof HttpClientErrorException) {
+                String error = ((HttpClientErrorException) throwable).getResponseBodyAsString();
+                logger.error(error);
+            }
+
             return EmailSenderStatus.FAILED;
 
         }

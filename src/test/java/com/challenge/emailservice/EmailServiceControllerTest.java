@@ -5,8 +5,10 @@ import com.challenge.emailservice.data.EmailAddress;
 import com.challenge.emailservice.service.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,10 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringRunner.class)
@@ -36,6 +37,25 @@ public class EmailServiceControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Before
+    public void setUp() {
+        Mockito.doNothing().when(service).sendEmail(any());
+    }
+
+    @Test
+    public void shouldReturnOkWhenRequestedWithValidPayload() throws Exception {
+        Email email = new Email();
+        email.setFrom(new EmailAddress("from@email.com"));
+        email.setSubject("Some Subject");
+        email.setContent("Some Content");
+        email.setTo(Lists.newArrayList(new EmailAddress("to@email.com")));
+        mvc.perform(
+                post("/email")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(email)))
+                .andExpect(status().isOk());
+    }
 
     @Test
     public void shouldReturnErrorWhenRequestedWithNoPayload() throws Exception {
@@ -110,7 +130,7 @@ public class EmailServiceControllerTest {
         Email email = new Email();
         email.setSubject("Some Subject");
         email.setContent("Some Content");
-        email.setFrom(new EmailAddress("to@email.com"));
+        email.setFrom(new EmailAddress("from@email.com"));
         email.setTo(Lists.newArrayList());
 
         mvc.perform(
@@ -124,7 +144,7 @@ public class EmailServiceControllerTest {
     public void shouldReturnErrorWhenRequestedWithNullSubject() throws Exception {
         Email email = new Email();
         email.setContent("Some Content");
-        email.setFrom(new EmailAddress("to@email.com"));
+        email.setFrom(new EmailAddress("from@email.com"));
         email.setTo(Lists.newArrayList(new EmailAddress("to@email.com")));
 
         mvc.perform(
@@ -139,7 +159,7 @@ public class EmailServiceControllerTest {
         Email email = new Email();
         email.setSubject("");
         email.setContent("Some Content");
-        email.setFrom(new EmailAddress("to@email.com"));
+        email.setFrom(new EmailAddress("from@email.com"));
         email.setTo(Lists.newArrayList(new EmailAddress("to@email.com")));
 
         mvc.perform(
@@ -154,7 +174,7 @@ public class EmailServiceControllerTest {
         Email email = new Email();
         email.setSubject("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In amet.");
         email.setContent("Some Content");
-        email.setFrom(new EmailAddress("to@email.com"));
+        email.setFrom(new EmailAddress("from@email.com"));
         email.setTo(Lists.newArrayList(new EmailAddress("to@email.com")));
 
         mvc.perform(
@@ -168,7 +188,7 @@ public class EmailServiceControllerTest {
     public void shouldReturnErrorWhenRequestedWithNullContent() throws Exception {
         Email email = new Email();
         email.setSubject("Some Subject");
-        email.setFrom(new EmailAddress("to@email.com"));
+        email.setFrom(new EmailAddress("from@email.com"));
         email.setTo(Lists.newArrayList(new EmailAddress("to@email.com")));
 
         mvc.perform(
@@ -183,7 +203,7 @@ public class EmailServiceControllerTest {
         Email email = new Email();
         email.setContent("");
         email.setSubject("Some Subject");
-        email.setFrom(new EmailAddress("to@email.com"));
+        email.setFrom(new EmailAddress("from@email.com"));
         email.setTo(Lists.newArrayList(new EmailAddress("to@email.com")));
 
         mvc.perform(
@@ -205,7 +225,7 @@ public class EmailServiceControllerTest {
         Email email = new Email();
         email.setContent("");
         email.setSubject("Some Subject");
-        email.setFrom(new EmailAddress("to@email.com"));
+        email.setFrom(new EmailAddress("from@email.com"));
         email.setTo(to);
         email.setCc(Optional.of(cc));
         email.setBcc(Optional.of(Lists.newArrayList(new EmailAddress("bcc@email.com"))));

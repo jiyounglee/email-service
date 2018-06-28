@@ -19,20 +19,20 @@ email.sender.mailgun.api.key = {generated mailgun api key}
 6. Run create Run/Debug config
 7. Send request to http://localhost:8080/ as described below
 
-### Run the packaged application
+### How to Run the packaged application
 1. Clone this project
 2. Run command using maven wrapper ./mvnw clean package
 3. Run command java -jar target/{email-service-packaged-jar}
 4. Send request to http://localhost:8080/ as described below
 
-### Run the using maven
+### How to Run the using maven
 1. Clone this project
 2. Run command using maven wrapper ./mvnw spring-boot:run
 3. Send request to http://localhost:8080/ as described below
 
 ## Usage
 ### URL
-POST /email with JSON payload
+POST /email with Header Content-Type : application/json and body JSON payload
 
 ### Example Payload
 ```JSON
@@ -55,6 +55,7 @@ POST /email with JSON payload
       "address": "ccone@email.com"
     },
     {
+      "name" : "CC TWO",
       "address": "cctwo@email.com"
     },
     {
@@ -74,21 +75,44 @@ POST /email with JSON payload
 
 ### Validation
 #### Common Object
-Email Address Json object have name and address variables.
-Email Address object is used for from, to, cc and bcc.
-name is optional field
-address is required field and email address 
+* Email Address Json object have name and address variables.
+* Email Address object is used for from, to, cc and bcc.
+* name is optional field
+* address is required field and email address 
 
 #### Root Object
-from is required field and Email Address Object is validated
-to is required field with array of email address Json Object. At least one email address need to be provided.
-cc is optional field with array of email address Json Object.
-bcc is optional field with array of email address Json Object.
-subject is required field. can not be empty and can not have more than 64 characters
-content is required field. can not be empty and can not have more than 2048 characters
+* from is required field and Email Address Object is validated
+* to is required field with array of email address Json Object. At least one email address need to be provided.
+* cc is optional field with array of email address Json Object.
+* bcc is optional field with array of email address Json Object.
+* subject is required field. can not be empty and can not have more than 64 characters
+* content is required field. can not be empty and can not have more than 2048 characters
+
+### Error
+#### 400 - Invalid Payload
+* Malformed JSON
+* Not in right structure
+* Missing required fields
+* Invalid Email
+* Empty fields
+
+#### 500 - Server Error
+* Unable to send email using all the providers
+* Payload contains email that doesn't exist
 
 ### Limitations
 Only text can be sent
 
 ## Deployment
 The project is deployed using Heroku.
+https://challenge-email-service.herokuapp.com/
+
+## Enhancements
+* Validation
+    * Validation message could be customised to be more friendlier to use
+    * Validation message when payload contains correctly formatted but invalid email
+    * Validate how many recipients can one payload have
+* Response Object
+    * Response Object could be customised depending what information we need to give to the clients
+* Constants clean up
+    * There are few constants that are repeated through out the project could be cleaned up

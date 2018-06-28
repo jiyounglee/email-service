@@ -6,8 +6,9 @@ import com.challenge.emailservice.service.sender.EmailSenderStatus;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,7 +19,6 @@ import static org.apache.tomcat.util.codec.binary.Base64.encodeBase64;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 public class MailGunEmailSender implements EmailSender {
 
@@ -69,6 +69,7 @@ public class MailGunEmailSender implements EmailSender {
     }
 
     private String buildUrl(final Email email) throws UnsupportedEncodingException {
+        
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
         builder.queryParams(payloadBuilder.build(email));
 

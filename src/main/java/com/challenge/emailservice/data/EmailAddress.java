@@ -23,6 +23,7 @@ public class EmailAddress {
     public EmailAddress(@Email @Size(max = 320) @NotNull
                         @NotEmpty String address) {
         this.address = address;
+        name = Optional.empty();
     }
 
     public Optional<String> getName() {

@@ -15,11 +15,11 @@ import java.util.List;
 public class EmailServiceConfiguration {
 
     @Autowired
-    Environment env;
+    private Environment env;
 
     @Bean
     public List<EmailSender> emailSenders() {
-        
+
         MailGunEmailSender mailGunEmailSender = new MailGunEmailSender(
                 env.getProperty("email.sender.mailgun.url"),
                 env.getProperty("email.sender.mailgun.api.key"));

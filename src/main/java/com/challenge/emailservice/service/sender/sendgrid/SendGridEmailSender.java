@@ -61,7 +61,6 @@ public class SendGridEmailSender implements EmailSender {
             }
 
             return EmailSenderStatus.FAILED;
-
         }
     }
 }

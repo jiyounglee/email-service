@@ -44,23 +44,19 @@ public class SendGridPayloadBuilder {
 
     private JsonNode createPersonalizations(final Email email) {
 
-        ArrayNode recipients = objectMapper.createArrayNode();
-
-        ObjectNode to = objectMapper.createObjectNode();
-        to.set("to", createEmailAddresses(email.getTo()));
-        recipients.add(to);
+        ObjectNode personalization = objectMapper.createObjectNode();
+        personalization.set("to", createEmailAddresses(email.getTo()));
 
         if (email.getCc().isPresent()) {
-            ObjectNode cc = objectMapper.createObjectNode();
-            cc.set("cc", createEmailAddresses(email.getCc().get()));
-            recipients.add(cc);
+            personalization.set("cc", createEmailAddresses(email.getCc().get()));
         }
         if (email.getBcc().isPresent()) {
-            ObjectNode bcc = objectMapper.createObjectNode();
-            bcc.set("bcc", createEmailAddresses(email.getBcc().get()));
-            recipients.add(bcc);
+            personalization.set("bcc", createEmailAddresses(email.getBcc().get()));
         }
-        return recipients;
+
+        ArrayNode personalizations = objectMapper.createArrayNode();
+        personalizations.add(personalization);
+        return personalizations;
     }
 
     private JsonNode createEmailAddresses(List<EmailAddress> emailAddresses) {

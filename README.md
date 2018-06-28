@@ -21,14 +21,16 @@ email.sender.mailgun.api.key = {generated mailgun api key}
 
 ### How to Run the packaged application
 1. Clone this project
-2. Run command using maven wrapper ./mvnw clean package
-3. Run command java -jar target/{email-service-packaged-jar}
-4. Send request to http://localhost:8080/ as described below
+2. Update API key for Send Grid and Mail Gun
+3. Run command using maven wrapper ./mvnw clean package
+4. Run command java -jar target/{email-service-packaged-jar}
+5. Send request to http://localhost:8080/ as described below
 
 ### How to Run the using maven
 1. Clone this project
-2. Run command using maven wrapper ./mvnw spring-boot:run
-3. Send request to http://localhost:8080/ as described below
+2. Update API key for Send Grid and Mail Gun
+3. Run command using maven wrapper ./mvnw spring-boot:run
+4. Send request to http://localhost:8080/ as described below
 
 ## Usage
 ### URL

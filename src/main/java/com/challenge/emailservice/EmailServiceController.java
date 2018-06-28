@@ -22,7 +22,7 @@ public class EmailServiceController {
 
     @PostMapping("/email")
     public ResponseEntity sendEmail(@Valid @RequestBody final Email email) {
-        logger.debug("Received request to send email {}", email.toString());
+        logger.info("Received request to send email {}", email.toString());
         emailService.sendEmail(email);
         return ResponseEntity.ok().build();
     }

@@ -5,7 +5,7 @@ Email Service allows user to send email using various different Email Service Pr
 ## Build
 ### Api Key
 Add API key in application.properties file for sendgrid and mailgun by updating email.sender.sendgrid.api.key and email.sender.mailgun.api.key
-Updated the url for mailgun using your domain
+Update the url for mailgun using your domain
 
 application.properties
 email.sender.sendgrid.api.key = {generated sendgrid api key} 
